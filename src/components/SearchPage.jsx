@@ -34,10 +34,10 @@ const SearchPage = () => {
     <>
 
     <SearchForm />
-    
-    <LogoutButton/>
 
     <SearchResults/>
+
+    <LogoutButton/>
     
     </>
   )

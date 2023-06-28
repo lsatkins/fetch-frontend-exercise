@@ -3,10 +3,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 const initialState = {
   loading: false,
   breeds: [],
-  searchResults: [],
-  totalResults: 0,
-  nextPageQuery: null,
-  prevPageQuery: null,
+  dogs: []
 };
 
 export const fetchDogBreeds = createAsyncThunk('dogs/fetchDogBreeds', async () => {
@@ -31,10 +28,14 @@ export const fetchDogBreeds = createAsyncThunk('dogs/fetchDogBreeds', async () =
 
 export const searchDogs = createAsyncThunk('dogs/search', async ({ breeds, zipCodes, ageMin, ageMax, size, from, sort }) => {
   try {
-    console.log('hello searchDogs')
+    if(breeds.length < 1){
+        breeds = false;
+    }
+    if(zipCodes.length < 1){
+        zipCodes = false;
+    }
     // Build the query parameters
     let queryParams = new URLSearchParams();
-    console.log(queryParams)
     if (breeds) queryParams.append('breeds', breeds.join(','));
     if (zipCodes) queryParams.append('zipCodes', zipCodes.join(','));
     if (ageMin) queryParams.append('ageMin', ageMin.toString());
@@ -51,6 +52,7 @@ export const searchDogs = createAsyncThunk('dogs/search', async ({ breeds, zipCo
 
     if (response.ok) {
       const data = await response.json();
+    //   for(let obj)
       console.log('Search Results:', data);
       return data; // Return the search results to be stored in the state
     } else {
@@ -62,6 +64,26 @@ export const searchDogs = createAsyncThunk('dogs/search', async ({ breeds, zipCo
   }
 });
 
+export const nextOrPrev = createAsyncThunk('dogs/details', async (urlString) => {
+  try {
+    const url = `https://frontend-take-home-service.fetch.com${urlString}`;
+    const response = await fetch(url, {
+      method: 'GET',
+      credentials: 'include', // Send credentials (cookies) with the request
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      console.log('Fetched new data:', data);
+      return data; // Return the fetched dogs to be stored in the state
+    } else {
+      throw new Error('Error: ' + response.status);
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    throw error; // Rethrow the error to be handled by the rejected case
+  }
+});
 export const fetchDogs = createAsyncThunk('dogs/fetchDogs', async (dogIds) => {
   try {
     const url = 'https://frontend-take-home-service.fetch.com/dogs';
@@ -183,24 +205,34 @@ const dogsSlice = createSlice({
       // Handle error and update state accordingly
     });
     builder.addCase(searchDogs.pending, (state) => {
-      state.loading = true;
+    state.loading = true;
     });
     builder.addCase(searchDogs.fulfilled, (state, action) => {
-      state.loading = false;
-      state.searchResults = action.payload.resultIds;
-      state.totalResults = action.payload.total;
-      state.nextPageQuery = action.payload.next;
-      state.prevPageQuery = action.payload.prev;
+        state.loading = false;
+        state.dogs = []
+        state.dogs = action.payload;
     });
     builder.addCase(searchDogs.rejected, (state, action) => {
-      state.loading = false;
-      // Handle error and update state accordingly
+        state.loading = false;
+        // Handle error and update state accordingly
+    });
+    builder.addCase(nextOrPrev.pending, (state) => {
+        state.loading = true;
+    });
+    builder.addCase(nextOrPrev.fulfilled, (state, action) => {
+        state.loading = false;
+        state.dogs = action.payload;
+    });
+    builder.addCase(nextOrPrev.rejected, (state, action) => {
+        state.loading = false;
+        // Handle error and update state accordingly
     });
     builder.addCase(fetchDogs.pending, (state) => {
       state.loading = true;
     });
     builder.addCase(fetchDogs.fulfilled, (state, action) => {
       state.loading = false;
+      state.details = action.payload
       // Update state with fetched dogs
     });
     builder.addCase(fetchDogs.rejected, (state, action) => {

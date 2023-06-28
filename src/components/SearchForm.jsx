@@ -4,13 +4,17 @@ import { searchDogs } from '../redux/dogs/dogsSlice';
 
 const SearchForm = () => {
     const dispatch = useDispatch();
-    const [breeds, setBreeds] = useState('');
-    const [zipCodes, setZipCodes] = useState('');
+    const [breed, setBreed] = useState('');
+    const [breeds, setBreeds] = useState([])
+    const [zipCode, setZipCode] = useState('');
+    const [zipCodes, setZipCodes] = useState([])
     const [ageMin, setAgeMin] = useState('');
     const [ageMax, setAgeMax] = useState('');
     const [size, setSize] = useState('');
     const [from, setFrom] = useState('');
     const [sort, setSort] = useState('');
+
+    const dogs = useSelector(state=>state.dogs.dogs)
   
     const handleSearch = (e) => {
       e.preventDefault();
