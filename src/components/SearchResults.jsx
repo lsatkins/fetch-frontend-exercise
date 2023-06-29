@@ -81,7 +81,7 @@ const SearchResults = () => {
         <li key={dog.id} className="m-3">
             <div className="row">
                 <div className="col-6">
-                <img src={dog.img}></img>
+                <img src={dog.img} height='500px' width='500px'></img>
                 </div>
                 <div className="col-6 d-flex flex-column justify-content-center align-items-center">
                     <div>Name: {dog.name}</div>

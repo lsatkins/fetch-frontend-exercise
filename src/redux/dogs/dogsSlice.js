@@ -26,14 +26,22 @@ export const fetchDogBreeds = createAsyncThunk('dogs/fetchDogBreeds', async () =
   }
 });
 
-export const searchDogs = createAsyncThunk('dogs/search', async ({ breeds, zipCodes, ageMin, ageMax, size, from, sort }) => {
+export const searchDogs = createAsyncThunk('dogs/search', async ({ breeds, zipCodes, ageMin, ageMax, size, sort }) => {
   try {
-    if(breeds.length < 1){
+    console.log(breeds)
+    if(breeds.length == 1 && breeds.includes('') || breeds.length< 1){
         breeds = false;
     }
-    if(zipCodes.length < 1){
+    if(zipCodes.length == 1 && zipCodes.includes('') || zipCodes.length< 1){
         zipCodes = false;
     }
+    if(ageMin.length < 1){
+        ageMin = false;
+    }
+    if(ageMax.length < 1){
+        ageMax = false;
+    }
+    console.log('zipCodes',zipCodes)
     // Build the query parameters
     let queryParams = new URLSearchParams();
     if (breeds) queryParams.append('breeds', breeds.join(','));
@@ -41,14 +49,15 @@ export const searchDogs = createAsyncThunk('dogs/search', async ({ breeds, zipCo
     if (ageMin) queryParams.append('ageMin', ageMin.toString());
     if (ageMax) queryParams.append('ageMax', ageMax.toString());
     if (size) queryParams.append('size', size.toString());
-    if (from) queryParams.append('from', from.toString());
     if (sort) queryParams.append('sort', sort);
+    console.log(queryParams)
 
     const url = `https://frontend-take-home-service.fetch.com/dogs/search?${queryParams.toString()}`;
     const response = await fetch(url, {
       method: 'GET',
       credentials: 'include', // Send credentials (cookies) with the request
     });
+    console.log('response', response)
 
     if (response.ok) {
       const data = await response.json();

@@ -1,0 +1,45 @@
+label{
+    padding-right: 10px;
+}
+.breedList{
+    max-height: 120px;
+    overflow: scroll;
+    width: 185px;
+    border: solid black 1px;
+}
+.breedList::-webkit-scrollbar {
+    display: none; 
+}
+.addedBreeds{
+    border: solid black 1px;
+    display: flex;
+    flex-direction: column;
+    max-height: 150px;
+    width: 185px;
+    overflow: scroll;
+}
+.addedBreeds::-webkit-scrollbar {
+    display: none; 
+}
+.breedAndX{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 5px;
+    padding-right: 5px;
+
+}
+.breedAndX:hover{
+    color: white;
+    background-color: black;
+}
+.x:hover{
+    color: red;
+}
+.breedItem{
+    padding-left: 2px;
+}
+.breedItem:hover{
+    color: white;
+    background-color: black;
+}
