@@ -1,0 +1,9 @@
+.baseLayout{
+    position: relative;
+    top: 80px;
+    background-color: orange;
+    height: calc(100% - 80px);
+}
+#root{
+    height: 100vh;
+}

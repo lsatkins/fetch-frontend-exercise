@@ -26,14 +26,14 @@ export const fetchDogBreeds = createAsyncThunk('dogs/fetchDogBreeds', async () =
   }
 });
 
-export const searchDogs = createAsyncThunk('dogs/search', async ({ breeds, zipCodes, ageMin, ageMax, size, sort }) => {
+export const searchDogs = createAsyncThunk('dogs/search', async ({ breeds, zipCode, ageMin, ageMax, size, sort }) => {
   try {
-    console.log(breeds)
-    if(breeds.length == 1 && breeds.includes('') || breeds.length< 1){
+    console.log(zipCode)
+    if((breeds.length === 1 && breeds.includes('')) || breeds.length< 1){
         breeds = false;
     }
-    if(zipCodes.length == 1 && zipCodes.includes('') || zipCodes.length< 1){
-        zipCodes = false;
+    if((zipCode.length === 1 && zipCode.includes('')) || zipCode.length< 1){
+        zipCode = false;
     }
     if(ageMin.length < 1){
         ageMin = false;
@@ -41,11 +41,11 @@ export const searchDogs = createAsyncThunk('dogs/search', async ({ breeds, zipCo
     if(ageMax.length < 1){
         ageMax = false;
     }
-    console.log('zipCodes',zipCodes)
+    console.log('zipCode',zipCode)
     // Build the query parameters
     let queryParams = new URLSearchParams();
     if (breeds) queryParams.append('breeds', breeds.join(','));
-    if (zipCodes) queryParams.append('zipCodes', zipCodes.join(','));
+    if (zipCode) queryParams.append('zipCodes', zipCode.join(','));
     if (ageMin) queryParams.append('ageMin', ageMin.toString());
     if (ageMax) queryParams.append('ageMax', ageMax.toString());
     if (size) queryParams.append('size', size.toString());

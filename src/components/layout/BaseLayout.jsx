@@ -1,17 +1,18 @@
 import React from 'react'
 import Header from './Header'
+import '../../styles/baseLayout.css'
 
 const BaseLayout = ({children}) => {
     
   return (
     <>
     
-        <div>
         <Header />
-        <br /> <br />
+          <div className="baseLayout">
 
             {children}
-        </div>
+          
+          </div>
       
     </>
   )

@@ -2,14 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { searchDogs } from '../redux/dogs/dogsSlice';
 import '../styles/searchForm.css'
-import {checkBreeds} from '../functions/functions'
 
 const SearchForm = () => {
     const dispatch = useDispatch();
-    const [breed, setBreed] = useState('');
     const [breeds, setBreeds] = useState([])
-    const [zipCode, setZipCode] = useState('');
-    const [zipCodes, setZipCodes] = useState([])
+    const [showBreedFilter, setShowBreedFilter] = useState(false)
+    const [zipCode, setZipCode] = useState([]);
     const [ageMin, setAgeMin] = useState('');
     const [ageMax, setAgeMax] = useState('');
     const [size, setSize] = useState('');
@@ -19,6 +17,8 @@ const SearchForm = () => {
 
     const dogs = useSelector(state=>state.dogs.dogs)
     const allBreeds = useSelector(state=>state.dogs.breeds)
+
+    console.log(zipCode)
 
     useEffect(() => {
       
@@ -32,97 +32,110 @@ const SearchForm = () => {
   
     const handleSearch = (e) => {
       e.preventDefault();
-      console.log(breeds)
+      console.log('it is right hereeeeeeeeeee',zipCode)
   
       // Dispatch the searchDogs action with the selected search criteria
       dispatch(
         searchDogs({
           breeds,
-          zipCodes,
+          zipCode,
           ageMin: Number(ageMin),
           ageMax: Number(ageMax),
           size: Number(size),
           sort,
         })
+
       );
+
+      setShowBreedFilter(false)
 
     };
 
-    const handleAddBreed = (addedBreed) => {
+    const handleSetBreeds = (e) => {
 
-        if(breeds.includes(addedBreed)){       
-        }
-        else{
-            setBreeds([...breeds, addedBreed])
-        }
-        console.log(breeds)
-        console.log(allBreeds)
+        setBreeds([e.target.value])
+
+        setShowBreedFilter(true)
 
     }
 
-    const handleRemoveBreed = (removedBreed) => {
-        const updatedBreeds = breeds.filter((breed) => breed !== removedBreed);
-        setBreeds(updatedBreeds);
-      };
-      
+    const handleAddBreed = (addedBreed) => {
+
+        setBreeds([addedBreed])
+        setShowBreedFilter(false)
+
+    }
+    
+    const handleAgeMin = (e) => {
+        if(e.target.value >= 0){
+            setAgeMin(e.target.value)
+        }
+    }
+
+    const handleAgeMax = (e) => {
+        if(e.target.value >= 0){
+            setAgeMax(e.target.value)
+        }
+    }
+
+    const handleSize = (e) => {
+        if(e.target.value >= 0){
+            setSize(e.target.value)
+        }
+    }
 
     return (
-        <div>
+        <>
             <form onSubmit={handleSearch}>
             {/* Breed selection */}
-            <div className="m-2 d-flex">
+            <div className="p-2 d-flex">
                 <label className='d-flex'>
-                    Search Breeds: &nbsp;
+                    Breed: &nbsp;
                     <div className="inputAndList">
-                        <input type="text" value={breed} onChange={(e) => setBreed(e.target.value)} />
-                        {breed != '' && (
+                        <input type="text" 
+                        value={[breeds]} 
+                        onChange={(e) => handleSetBreeds(e)}
+                        />
+                        {(breeds !== [] && breeds[0] && showBreedFilter) && (
                             <div className="breedList">
                                 {allBreeds.map(breedFromArray=>{
-                                    if(breed && breedFromArray.toLowerCase().includes(breed.toLowerCase())){
-                                        console.log(breed)
-                                        return <div className="breedItem" onClick={()=>handleAddBreed(breedFromArray)} id={breedFromArray}>{breedFromArray}</div>
+                                    if(breeds !== [] ){
+                                        console.log(breedFromArray.toLowerCase())
+                                        console.log(breeds)
+                                        console.log(breeds[0])
+                                        if(breedFromArray.toLowerCase().includes(breeds[0].toLowerCase())){
+                                            console.log(breeds)
+                                            return <div className="breedItem" onClick={()=>handleAddBreed(breedFromArray)} id={breedFromArray}>{breedFromArray}</div>
+                                        }
                                     }
                                 })}
                             </div>
                         )}
                     </div>
                 </label>
-                {breeds.length > 0 && (
-                    <div className="addedBreeds">
-                        {breeds.map((breed) => (
-                        <div key={breed} className="d-flex breedAndX">
-                            <div>{breed}</div> &nbsp;
-                            <div className="x" onClick={() => handleRemoveBreed(breed)}>
-                                X
-                            </div>
-                        </div>
-                        ))}
-                    </div>
-                )}
 
             </div>
 
             {/* Zip codes */}
                 <label>
                     Zip Codes: &nbsp;
-                    <input type="text" value={zipCodes} onChange={(e) => setZipCodes(e.target.value.split(','))} />
+                    <input type="text" value={zipCode} onChange={(e) => setZipCode([e.target.value])} />
                 </label>
-                <button type="submit">Add Zip Code</button>
-        
+                
             {/* Age range */}
             <label>
                 Age Min: &nbsp;
-                <input type="number" value={ageMin} onChange={(e) => setAgeMin(e.target.value)} />
+                <input type="number" value={ageMin} onChange={(e) => handleAgeMin(e)} />
             </label>
             <label>
                 Age Max: &nbsp;
-                <input type="number" value={ageMax} onChange={(e) => setAgeMax(e.target.value)} />
+                <input type="number" value={ageMax} onChange={(e) => handleAgeMax(e)} />
             </label>
         
             {/* Size */}
             <label>
                 Page Size: &nbsp;
-                <input type="number" value={size} onChange={(e) => setSize(e.target.value)} />
+                <input type="number" value={size} onChange={(e) => handleSize(e)} />
             </label>
         
             {/* Sort */}
@@ -145,7 +158,7 @@ const SearchForm = () => {
             {/* Submit button */}
             <button type="submit">Search</button>
             </form>
-        </div>
+            </>
       );
     };
 
