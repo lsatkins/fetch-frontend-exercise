@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchDogs } from '../redux/dogs/dogsSlice';
-import { nextOrPrev} from '../redux/dogs/dogsSlice'
-
+import { nextOrPrev} from '../redux/dogs/dogsSlice';
+import Dog from './Dog'
 
 const SearchResults = () => {
 
@@ -41,8 +41,7 @@ const SearchResults = () => {
     dispatch(nextOrPrev(url))
     setPage(page + 1)
 
-  }
-  
+  } 
 
   if (loading) {
     return <div>Loading...</div>;
@@ -76,22 +75,9 @@ const SearchResults = () => {
 
     
     {details ? (
-    <ul className="m-3">
-      {details.map((dog) => (
-        <li key={dog.id} className="m-3">
-            <div className="row">
-                <div className="col-6">
-                <img src={dog.img} height='500px' width='500px'></img>
-                </div>
-                <div className="col-6 d-flex flex-column justify-content-center align-items-center">
-                    <div>Name: {dog.name}</div>
-                    <div>Age: {dog.age}</div>
-                    <div>Breed: {dog.breed}</div>
-                    <div>Zip Code: {dog.zip_code}</div>
-                    <button>Favorite</button>
-                </div>
-            </div>
-        </li>
+    <ul className="p-0">
+      {details.map((dog, index) => (
+      <Dog dogObj={dog} index={index}/>
       ))}
     </ul>
     ) : null

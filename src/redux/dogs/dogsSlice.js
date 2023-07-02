@@ -3,7 +3,8 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 const initialState = {
   loading: false,
   breeds: [],
-  dogs: []
+  dogs: [],
+  saved: []
 };
 
 export const fetchDogBreeds = createAsyncThunk('dogs/fetchDogBreeds', async () => {
@@ -200,6 +201,34 @@ const dogsSlice = createSlice({
     clearState: (state) => {
         return initialState;
       },
+    toggleSaved: (state, payload) => {
+        const id = payload.payload
+        let index;
+        if(state.saved.length > 0){
+
+            index = state.saved.findIndex((dog) => dog.id === id);
+
+
+        } else {
+            index = -1
+        }
+
+        if (index !== -1) {
+            // Dog is already saved, remove it from the array
+            return {
+              ...state,
+              saved: state.saved.filter((dog) => dog.id !== id),
+            };
+          } else {
+            // Dog is not saved, add it to the array
+            console.log(id)
+            const dogToAdd = state.details.find((dog) => dog.id === id);
+            return {
+              ...state,
+              saved: [...state.saved, dogToAdd],
+            };
+        }
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(fetchDogBreeds.pending, (state) => {
@@ -284,5 +313,5 @@ const dogsSlice = createSlice({
   },
 });
 
-export const { clearState } = dogsSlice.actions;
+export const { clearState, toggleSaved } = dogsSlice.actions;
 export default dogsSlice.reducer;

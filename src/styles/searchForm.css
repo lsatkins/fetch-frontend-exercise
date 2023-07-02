@@ -43,3 +43,18 @@ label{
     color: white;
     background-color: black;
 }
+.purple{
+    background: linear-gradient(to right, #440a67, purple);
+    color: orange;
+}
+.orange{
+    background-color: orange;
+    color: #440a67;
+}
+.text{
+    height: 300px;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
