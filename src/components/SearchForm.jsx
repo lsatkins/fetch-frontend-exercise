@@ -48,6 +48,14 @@ const SearchForm = () => {
       );
 
       setShowBreedFilter(false)
+    //   setBreeds([])
+    //   setZipCode([])
+    //   setAgeMin('')
+    //   setAgeMax('')
+    //   setSize('')
+    //   setSort('')
+    //   setSortType('')
+    //   setSortOrder('')
 
     };
 
@@ -143,15 +151,14 @@ const SearchForm = () => {
                 Sort By: &nbsp;
                 {console.log(sort)}
                 <select value={sortType} onChange={(e) => setSortType(e.target.value)}>
-                <option value="">None</option>
-                <option value="name">Name</option>
-                <option value="age">Age</option>
-                <option value="breed">Breed</option>
+                    <option value="">None</option>
+                    <option value="name">Name</option>
+                    <option value="age">Age</option>
                 </select>
                 <select value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}>
-                <option value="">None</option>
-                <option value="asc">Field Ascending</option>
-                <option value="desc">Field Descending</option>
+                    <option value="">None</option>
+                    <option value="asc">Field Ascending</option>
+                    <option value="desc">Field Descending</option>
                 </select>
             </label>
         

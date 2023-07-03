@@ -4,7 +4,8 @@ const initialState = {
   loading: false,
   breeds: [],
   dogs: [],
-  saved: []
+  saved: [],
+  query: ''
 };
 
 export const fetchDogBreeds = createAsyncThunk('dogs/fetchDogBreeds', async () => {
@@ -228,7 +229,8 @@ const dogsSlice = createSlice({
               saved: [...state.saved, dogToAdd],
             };
         }
-    }
+    },
+    
   },
   extraReducers: (builder) => {
     builder.addCase(fetchDogBreeds.pending, (state) => {
@@ -249,6 +251,7 @@ const dogsSlice = createSlice({
         state.loading = false;
         state.dogs = []
         state.dogs = action.payload;
+        state.query = action.meta.requestId
     });
     builder.addCase(searchDogs.rejected, (state, action) => {
         state.loading = false;

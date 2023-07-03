@@ -8,8 +8,10 @@ const SearchResults = () => {
 
   const dogs = useSelector((state) => state.dogs.dogs);
   const loading = useSelector((state) => state.dogs.loading);
-  const details = useSelector(state=>state.dogs.details)
-
+  const details = useSelector(state=>state.dogs.details);
+  const query = useSelector(state=>state.dogs.query)
+  console.log('query', query)
+  
   const [page, setPage] = useState(1)
   
   const [pages, setPages] = useState(0)
@@ -19,15 +21,22 @@ const SearchResults = () => {
   useEffect(() => {
     if (dogs.resultIds !== undefined) {
       dispatch(fetchDogs(dogs.resultIds));
-      setPages(Math.ceil(dogs.total/dogs.resultIds.length))
+      // saying if page === 1 so that pages value will not change when we load the last page of results
+      if(page === 1){
+        setPages(Math.ceil(dogs.total/dogs.resultIds.length))
+        console.log('set pages')
+        // setQuery(dogs.next)
+        // console.log(query)
+      }
     }
   }, [dispatch, dogs.resultIds]);
 
   useEffect(() => {
-    if (dogs.resultIds !== undefined) {
-      dispatch(fetchDogs(dogs.resultIds));
-    }
-  }, [dispatch, dogs.resultIds]);
+    
+    setPage(1)
+    
+  }, [query])
+  
 
   const handlePrev = (url) => {
 
@@ -65,7 +74,7 @@ const SearchResults = () => {
                     <b>Page:</b> {page} of {pages}
                 </div>
                 <div className="col-4 text-center p-0">
-                {dogs.next ? (
+                {(page !== pages) ? (
                     <button onClick={(e)=>handleNext(e.target.value)} value={dogs.next}>Next</button>
                 ) : null}
                 </div>

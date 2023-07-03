@@ -10,7 +10,6 @@ import { useNavigate } from 'react-router-dom';
 const SearchPage = () => {
 
     const loggedIn = useSelector(state=>state.auth.loggedIn)
-    console.log(loggedIn)
 
     const navigate = useNavigate()
 
