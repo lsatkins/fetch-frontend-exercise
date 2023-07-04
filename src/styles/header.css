@@ -7,6 +7,12 @@
     z-index: 999;
 }
 .logo{
-    margin-top: 10px;
     margin-left: 10px;
+}
+.textLink{
+    margin-right: 10px;
+    color: orange;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

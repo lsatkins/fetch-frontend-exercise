@@ -2,6 +2,7 @@ import Button from 'react-bootstrap/Button';
 import {logoutUser} from '../redux/auth/authSlice'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import '../styles/button.css'
 
 function LogoutButton() {
 
@@ -33,7 +34,7 @@ function LogoutButton() {
   return (
     <>
       
-      <Button onClick={()=>handleLogout()}variant="danger">Log Out</Button>{' '}
+      <Button className="me-2" onClick={()=>handleLogout()}variant="secondary">Log Out</Button>{' '}
       
     </>
   );

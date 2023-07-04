@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useState, useEffect} from 'react'
 import '../styles/searchForm.css'
 import {AiFillHeart} from 'react-icons/ai'
 import {AiOutlineHeart} from 'react-icons/ai'
@@ -6,18 +6,22 @@ import { useSelector, useDispatch } from 'react-redux';
 import { toggleSaved } from '../redux/dogs/dogsSlice';
 
 const Dog = ({ dogObj, index }) => {
-  const saved = useSelector((state) => state.dogs.saved);
-  const dispatch = useDispatch();
+    const saved = useSelector((state) => state.dogs.saved);
 
-  const isSaved = saved.includes(dogObj);
+    const dispatch = useDispatch();
 
+    const [savedDog, setSavedDog] = useState(false)
+
+    const displaySaved = () => {
+        const foundDog = saved.find((dog) => dog.id === dogObj.id);
+        setSavedDog(foundDog);
+    }
   const changeSaved = () => {
     dispatch(toggleSaved(dogObj.id));
   };
 
   useEffect(() => {
-    
-  
+    displaySaved()
   }, [saved])
   
 
@@ -34,8 +38,8 @@ const Dog = ({ dogObj, index }) => {
                 <div>Age: {dogObj.age}</div>
                 <div>Breed: {dogObj.breed}</div>
                 <div>Zip Code: {dogObj.zip_code}</div>
-                <div onClick={changeSaved}>
-                {isSaved ? <AiFillHeart /> : <AiOutlineHeart />}
+                <div className="text-center" onClick={changeSaved}>
+                {savedDog ? <AiFillHeart /> : <AiOutlineHeart />}
                 </div>
             </div>
           </div>

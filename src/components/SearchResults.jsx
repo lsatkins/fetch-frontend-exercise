@@ -84,7 +84,7 @@ const SearchResults = () => {
 
     
     {details ? (
-    <ul className="p-0">
+    <ul className="p-0 w-100">
       {details.map((dog, index) => (
       <Dog dogObj={dog} index={index}/>
       ))}

@@ -48,14 +48,6 @@ const SearchForm = () => {
       );
 
       setShowBreedFilter(false)
-    //   setBreeds([])
-    //   setZipCode([])
-    //   setAgeMin('')
-    //   setAgeMax('')
-    //   setSize('')
-    //   setSort('')
-    //   setSortType('')
-    //   setSortOrder('')
 
     };
 
@@ -96,74 +88,98 @@ const SearchForm = () => {
         <>
             <form onSubmit={handleSearch}>
             {/* Breed selection */}
-            <div className="p-2 d-flex">
-                <label className='d-flex'>
-                    Breed: &nbsp;
-                    <div className="inputAndList">
-                        <input type="text" 
-                        value={[breeds]} 
-                        onChange={(e) => handleSetBreeds(e)}
-                        />
-                        {(breeds !== [] && breeds[0] && showBreedFilter) && (
-                            <div className="breedList">
-                                {allBreeds.map(breedFromArray=>{
-                                    if(breeds !== [] ){
-                                        console.log(breedFromArray.toLowerCase())
-                                        console.log(breeds)
-                                        console.log(breeds[0])
-                                        if(breedFromArray.toLowerCase().includes(breeds[0].toLowerCase())){
-                                            console.log(breeds)
-                                            return <div className="breedItem" onClick={()=>handleAddBreed(breedFromArray)} id={breedFromArray}>{breedFromArray}</div>
+            <div className="row p-2 justify-content-center">
+                <div className="col-6 d-flex justify-content-center">
+                    <label className="d-flex">
+                        Breed: &nbsp;
+                        <div className="inputAndList ms-1">
+                            <input type="text" 
+                            value={[breeds]} 
+                            onChange={(e) => handleSetBreeds(e)}
+                            />
+                            {(breeds !== [] && breeds[0] && showBreedFilter) && (
+                                <div className="breedList">
+                                    {allBreeds.map(breedFromArray=>{
+                                        if(breeds !== [] ){
+                                            if(breedFromArray.toLowerCase().includes(breeds[0].toLowerCase())){
+                                                return <div className="breedItem" onClick={()=>handleAddBreed(breedFromArray)} id={breedFromArray}>{breedFromArray}</div>
+                                            }
                                         }
-                                    }
-                                })}
-                            </div>
-                        )}
+                                    })}
+                                </div>
+                            )}
+                        </div>
+                    </label>
+
+                </div>
+                    <div className="col-6 d-flex justify-content-center">
+                    {/* Zip codes */}
+                        <label className="d-flex">
+                            Zip Codes: &nbsp;
+                            <input type="text" value={zipCode} onChange={(e) => setZipCode([e.target.value])} />
+                        </label>
                     </div>
-                </label>
 
             </div>
 
-            {/* Zip codes */}
-                <label>
-                    Zip Codes: &nbsp;
-                    <input type="text" value={zipCode} onChange={(e) => setZipCode([e.target.value])} />
-                </label>
-                
-            {/* Age range */}
-            <label>
-                Age Min: &nbsp;
-                <input type="number" value={ageMin} onChange={(e) => handleAgeMin(e)} />
-            </label>
-            <label>
-                Age Max: &nbsp;
-                <input type="number" value={ageMax} onChange={(e) => handleAgeMax(e)} />
-            </label>
-        
-            {/* Size */}
-            <label>
-                Page Size: &nbsp;
-                <input type="number" value={size} onChange={(e) => handleSize(e)} />
-            </label>
-        
-            {/* Sort */}
-            <label>
-                Sort By: &nbsp;
-                {console.log(sort)}
-                <select value={sortType} onChange={(e) => setSortType(e.target.value)}>
-                    <option value="">None</option>
-                    <option value="name">Name</option>
-                    <option value="age">Age</option>
-                </select>
-                <select value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}>
-                    <option value="">None</option>
-                    <option value="asc">Field Ascending</option>
-                    <option value="desc">Field Descending</option>
-                </select>
-            </label>
+            <div className="row p-2 justify-content-center">
+                <div className="col-6 d-flex justify-content-center">   
+                    {/* Age range */}
+                    <label className="d-flex">
+                        Age Min: &nbsp;
+                        <input type="number" value={ageMin} onChange={(e) => handleAgeMin(e)} />
+                    </label>
+                </div>
+                <div className="col-6 d-flex justify-content-center">   
+                    <label className="d-flex">
+                        Age Max: &nbsp;
+                        <input type="number" value={ageMax} onChange={(e) => handleAgeMax(e)} />
+                    </label>
+                </div>
+            </div>
+            
+
+            <div className="row p-2 justify-content-center">
+                <div className="col-6 d-flex justify-content-center">   
+                    {/* Size */}
+                    <label className="d-flex">
+                        Page Size: &nbsp;
+                        <input type="number" value={size} onChange={(e) => handleSize(e)} />
+                    </label>
+                </div>
+            
+                <div className="col-6 d-flex justify-content-center">   
+                    {/* Sort */}
+                    <label>
+                        <div className="row text-start">
+                            <div className="col-12">
+                                Sort By: &nbsp;
+                                <select value={sortType} onChange={(e) => setSortType(e.target.value)}>
+                                    <option value="">None</option>
+                                    <option value="name">Name</option>
+                                    <option value="age">Age</option>
+                                </select>
+                            </div>
+                            <div className="col-12">
+                                Order: &nbsp;
+                                <select value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}>
+                                    <option value="">None</option>
+                                    <option value="asc">Field Ascending</option>
+                                    <option value="desc">Field Descending</option>
+                                </select>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+            </div>
         
             {/* Submit button */}
-            <button type="submit">Search</button>
+            <div className="row p-2 justify-content-center">
+                <div className="col-12">
+                    <button type="submit">Search</button>
+                </div>
+            </div>
+            
             </form>
             </>
       );

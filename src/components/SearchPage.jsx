@@ -2,7 +2,6 @@ import React, {useEffect} from 'react'
 import {fetchDogBreeds, searchDogs, clearState} from '../redux/dogs/dogsSlice'
 import SearchForm from './SearchForm'
 import SearchResults from './SearchResults'
-import LogoutButton from './LogoutButton'
 import {useDispatch, useSelector} from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 
@@ -32,11 +31,13 @@ const SearchPage = () => {
   return (
     <>
 
-    <SearchForm />
+        <div className="d-flex flex-column align-items-center">
 
-    <SearchResults/>
+            <SearchForm />
 
-    <LogoutButton/>
+            <SearchResults/>
+
+        </div>
     
     </>
   )

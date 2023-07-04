@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-d
 import BaseLayout from './components/layout/BaseLayout'
 import LoginPage from './components/LoginPage'
 import SearchPage from './components/SearchPage'
+import Saved from './components/Saved'
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -15,6 +16,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Routes>
           <Route path="/login" element={<LoginPage />}/>
           <Route path='/search' element={<SearchPage />}/>
+          <Route path='/saved' element={<Saved />}/>
           <Route path="/" element={<Navigate to="/login" />} />
         </Routes>
       </BaseLayout>

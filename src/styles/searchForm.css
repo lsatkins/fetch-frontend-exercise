@@ -6,6 +6,11 @@ label{
     overflow: scroll;
     width: 185px;
     border: solid black 1px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background-color: white;
+    color: black;
 }
 .breedList::-webkit-scrollbar {
     display: none; 
@@ -57,4 +62,11 @@ label{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+}
+form{
+    width: 70%;
+    text-align: center
+}
+input{
+    height: 30px;
 }
