@@ -4,6 +4,7 @@ import SearchForm from './SearchForm'
 import SearchResults from './SearchResults'
 import {useDispatch, useSelector} from 'react-redux'
 import { useNavigate } from 'react-router-dom';
+import '../styles/baseLayout.css'
 
 
 const SearchPage = () => {
@@ -31,7 +32,7 @@ const SearchPage = () => {
   return (
     <>
 
-        <div className="d-flex flex-column align-items-center">
+        <div className="searchPage d-flex flex-column align-items-center">
 
             <SearchForm />
 

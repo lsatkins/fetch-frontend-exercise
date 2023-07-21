@@ -18,21 +18,21 @@ const SearchForm = () => {
     const dogs = useSelector(state=>state.dogs.dogs)
     const allBreeds = useSelector(state=>state.dogs.breeds)
 
-    console.log(zipCode)
-
     useEffect(() => {
       
-        if(sortOrder !== ('asc' || 'desc')){
+        if(sortOrder !== 'asc' && sortOrder !== 'desc'){
             setSort(undefined)
         } else{
             setSort(`${sortType}:${sortOrder}`)
         }
+        console.log(sortOrder)
       
     }, [sortOrder, sortType])  
   
     const handleSearch = (e) => {
       e.preventDefault();
       console.log('it is right hereeeeeeeeeee',zipCode)
+      console.log(sort)
   
       // Dispatch the searchDogs action with the selected search criteria
       dispatch(
@@ -86,7 +86,7 @@ const SearchForm = () => {
 
     return (
         <>
-            <form onSubmit={handleSearch}>
+            <form className="border border-dark border-2 rounded m-2" onSubmit={handleSearch}>
             {/* Breed selection */}
             <div className="row p-2 justify-content-center">
                 <div className="col-6 d-flex justify-content-center">
@@ -115,7 +115,7 @@ const SearchForm = () => {
                     <div className="col-6 d-flex justify-content-center">
                     {/* Zip codes */}
                         <label className="d-flex">
-                            Zip Codes: &nbsp;
+                            Zip Code: &nbsp;
                             <input type="text" value={zipCode} onChange={(e) => setZipCode([e.target.value])} />
                         </label>
                     </div>
